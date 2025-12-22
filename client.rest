@@ -1,0 +1,9 @@
+@baseUrl = http://localhost:3000
+
+# RECADOS
+###
+GET {{baseUrl}}/recados
+###
+GET {{baseUrl}}/recados/1
+###
+POST {{baseUrl}}/recados
