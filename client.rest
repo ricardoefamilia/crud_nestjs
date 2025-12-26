@@ -1,9 +1,36 @@
 @baseUrl = http://localhost:3000
 
 # RECADOS
-###
-GET {{baseUrl}}/recados
-###
-GET {{baseUrl}}/recados/1
-###
+### Lista todos os recados
+GET {{baseUrl}}/recados/?limit=10&page=4
+### Detalha um recado específico
+GET {{baseUrl}}/recados/2
+### Cria um novo recado
 POST {{baseUrl}}/recados
+Content-Type: application/json
+
+  {
+    # "id": 2,
+    "texto": "Novo recado criado via API",
+    "de": "Joana",
+    "para": "João",
+    "lido": false,
+    "data": "2025-12-26T14:53:14.655Z"
+  }
+
+### Atualiza um recado existente
+PATCH {{baseUrl}}/recados/2
+Content-Type: application/json
+
+{
+    "texto": "Atualiza Recado",
+    "de": "Joana",
+    "para": "João",
+    "lido": false,
+    "data": "2025-12-26T14:53:14.655Z"
+  }
+
+### Remove/Exclui um recado existente
+DELETE {{baseUrl}}/recados/2
+
+
