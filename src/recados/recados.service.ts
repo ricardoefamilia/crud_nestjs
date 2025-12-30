@@ -1,5 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { Recado } from './entities/recado.entity';
+import { CreateRecadoDto } from './dto/create-recado.dto';
+import { UpdateRecadoDto } from './dto/update-recado.dto';
 
 @Injectable()
 export class RecadosService {
@@ -23,8 +25,8 @@ export class RecadosService {
     return this.recados;
   }
 
-  findOne(id: string) {
-    const recado = this.recados.find((recado) => recado.id === +id);
+  findOne(id: number) {
+    const recado = this.recados.find(recado => recado.id === id);
 
     if (recado) return recado;
 
@@ -32,20 +34,25 @@ export class RecadosService {
     this.throwNotFoundError();
   }
 
-  create(body: any) {
+  create(createRecadoDto: CreateRecadoDto) {
     this.lastId++;
     const id = this.lastId;
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    const novoRecado = { id, ...body };
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+
+    const novoRecado = {
+      id,
+      ...createRecadoDto,
+      lido: false,
+      data: new Date(),
+    };
+
     this.recados.push(novoRecado);
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+
     return novoRecado;
   }
 
-  update(id: string, body: any) {
+  update(id: number, updateRecadoDto: UpdateRecadoDto) {
     const recadoExistenteIndex = this.recados.findIndex(
-      (recado) => recado.id === +id,
+      recado => recado.id === id,
     );
 
     if (recadoExistenteIndex < 0) {
@@ -53,18 +60,18 @@ export class RecadosService {
     }
 
     const recadoExistente = this.recados[recadoExistenteIndex];
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+
     this.recados[recadoExistenteIndex] = {
       ...recadoExistente,
-      ...body,
+      ...updateRecadoDto,
     };
 
     return this.recados[recadoExistenteIndex];
   }
 
-  remove(id: string) {
+  remove(id: number) {
     const recadoExistenteIndex = this.recados.findIndex(
-      (recado) => recado.id === +id,
+      recado => recado.id === id,
     );
     if (recadoExistenteIndex < 0) {
       this.throwNotFoundError();

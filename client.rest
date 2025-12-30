@@ -10,12 +10,9 @@ POST {{baseUrl}}/recados
 Content-Type: application/json
 
   {
-    # "id": 2,
     "texto": "Novo recado criado via API",
     "de": "Joana",
-    "para": "João",
-    "lido": false,
-    "data": "2025-12-26T14:53:14.655Z"
+    "para": "João"
   }
 
 ### Atualiza um recado existente
@@ -26,8 +23,7 @@ Content-Type: application/json
     "texto": "Atualiza Recado",
     "de": "Joana",
     "para": "João",
-    "lido": false,
-    "data": "2025-12-26T14:53:14.655Z"
+    "lido": true
   }
 
 ### Remove/Exclui um recado existente
