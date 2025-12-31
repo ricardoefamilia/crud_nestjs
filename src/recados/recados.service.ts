@@ -38,8 +38,8 @@ export class RecadosService {
     };
 
     const recado = this.recadosRepository.create(novoRecado);
-
-    return await this.recadosRepository.save(recado);
+    await this.recadosRepository.save(recado);
+    return recado;
   }
 
   async update(id: number, updateRecadoDto: UpdateRecadoDto) {
