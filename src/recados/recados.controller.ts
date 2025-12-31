@@ -18,10 +18,10 @@ export class RecadosController {
   constructor(private readonly recadosService: RecadosService) {}
   // Encontra todos os recados
   @Get()
-  findAll(@Query() pagination: { limit?: number; page?: number }) {
+  async findAll(@Query() pagination: { limit?: number; page?: number }) {
     const { limit = 10, page = 1 } = pagination;
     console.log(`Limit: ${limit}, Page: ${page}`);
-    return this.recadosService.findAll();
+    return await this.recadosService.findAll();
   }
 
   // Encontra apenas um recado
