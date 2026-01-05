@@ -2,7 +2,7 @@
 
 # RECADOS
 ### Lista todos os recados
-GET {{baseUrl}}/recados/?limit=10&page=4
+GET {{baseUrl}}/recados/?limit=10&offset=0
 ### Detalha um recado específico
 GET {{baseUrl}}/recados/2
 ### Cria um novo recado
@@ -10,23 +10,47 @@ POST {{baseUrl}}/recados
 Content-Type: application/json
 
   {
-    "texto": "Novo recado criado via API",
-    "de": "Joana",
-    "para": "João"
+    "texto": "Novo recado Com referências",
+    "deId": 13,
+    "paraId": 14
   }
 
 ### Atualiza um recado existente
-PATCH {{baseUrl}}/recados/2
+PATCH {{baseUrl}}/recados/14
 Content-Type: application/json
 
 {
-    "texto": "Atualiza Recado",
-    "de": "Joana",
-    "para": "João",
+    "texto": "Recado atualizado",
     "lido": true
   }
 
 ### Remove/Exclui um recado existente
-DELETE {{baseUrl}}/recados/2
+DELETE {{baseUrl}}/recados/5
+
+# PESSOAS
+### Lista todas as pessoas
+GET {{baseUrl}}/pessoas/
+### Detalha uma pessoa específica
+GET {{baseUrl}}/pessoas/2
+### Cria uma nova pessoa
+POST {{baseUrl}}/pessoas
+Content-Type: application/json
+
+  {
+    "nome": "Fernando Silva",
+    "email": "fernando@email.com",
+    "password": "Senh@123"
+  }
 
 
+### Atualiza um recado existente
+PATCH {{baseUrl}}/pessoas/1
+Content-Type: application/json
+
+{
+  "nome": "Marcos José da Silva",
+  "password": "Senh@1234"
+}
+
+### Remove/Exclui um recado existente
+DELETE {{baseUrl}}/pessoas/10

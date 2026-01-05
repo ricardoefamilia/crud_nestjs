@@ -1,45 +1,27 @@
-import { IsNotEmpty, IsString, MaxLength, MinLength } from 'class-validator';
+import {
+  IsNotEmpty,
+  IsPositive,
+  IsString,
+  MaxLength,
+  MinLength,
+  IsInt,
+} from 'class-validator';
+import { Type } from 'class-transformer';
 
 export class CreateRecadoDto {
-  @IsString({
-    message: 'O texto do recado deve ser uma string',
-  })
-  @IsNotEmpty({
-    message: 'O campo "texto" é obrigatório',
-  })
-  @MinLength(5, {
-    message: 'O campo "texto" deve ter no mínimo 5 caracteres',
-  })
-  @MaxLength(250, {
-    message: 'O campo "texto" deve ter no máximo 250 caracteres',
-  })
+  @IsString()
+  @IsNotEmpty()
+  @MinLength(5)
+  @MaxLength(250)
   readonly texto: string;
 
-  @IsString({
-    message: 'O campo "de" deve ser uma string',
-  })
-  @IsNotEmpty({
-    message: 'O campo "de" é obrigatório',
-  })
-  @MinLength(2, {
-    message: 'O campo "de" deve ter no mínimo 2 caracteres',
-  })
-  @MaxLength(150, {
-    message: 'O campo "de" deve ter no máximo 150 caracteres',
-  })
-  readonly de: string;
+  @Type(() => Number)
+  @IsInt()
+  @IsPositive()
+  deId: number;
 
-  @IsString({
-    message: 'O campo "para" deve ser uma string',
-  })
-  @IsNotEmpty({
-    message: 'O campo "para" é obrigatório',
-  })
-  @MinLength(2, {
-    message: 'O campo "para" deve ter no mínimo 2 caracteres',
-  })
-  @MaxLength(150, {
-    message: 'O campo "para" deve ter no máximo 150 caracteres',
-  })
-  readonly para: string;
+  @Type(() => Number)
+  @IsInt()
+  @IsPositive()
+  paraId: number;
 }
