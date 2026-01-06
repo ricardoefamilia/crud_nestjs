@@ -2,9 +2,9 @@
 
 # RECADOS
 ### Lista todos os recados
-GET {{baseUrl}}/recados/?limit=10&offset=0
+GET {{baseUrl}}/recados/?limit=2&offset=0
 ### Detalha um recado específico
-GET {{baseUrl}}/recados/2
+GET {{baseUrl}}/recados/15
 ### Cria um novo recado
 POST {{baseUrl}}/recados
 Content-Type: application/json

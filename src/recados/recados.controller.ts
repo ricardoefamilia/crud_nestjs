@@ -8,16 +8,25 @@ import {
   Patch,
   Post,
   Query,
+  UseInterceptors,
 } from '@nestjs/common';
 import { RecadosService } from './recados.service';
 import { CreateRecadoDto } from './dto/create-recado.dto';
 import { UpdateRecadoDto } from './dto/update-recado.dto';
 import { PaginationDto } from 'src/common/dto/pagination.dto';
+import { AddHeaderInterceptor } from 'src/common/interceptors/add-header.interceptor';
+import { TimingConnectionInterceptor } from 'src/common/interceptors/timing-connection.interceptor';
+import { ErrorHandlingInterceptor } from 'src/common/interceptors/error-handling.interceptor';
 
 @Controller('recados')
 export class RecadosController {
   constructor(private readonly recadosService: RecadosService) {}
   // Encontra todos os recados
+  @UseInterceptors(
+    TimingConnectionInterceptor,
+    AddHeaderInterceptor,
+    ErrorHandlingInterceptor,
+  )
   @Get()
   async findAll(@Query() paginationDto: PaginationDto) {
     // const { limit = 10, page = 1 } = pagination;
@@ -27,9 +36,10 @@ export class RecadosController {
   }
 
   // Encontra apenas um recado
+  @UseInterceptors(ErrorHandlingInterceptor)
   @Get(':id')
   findOne(@Param('id', ParseIntPipe) id: number) {
-    console.log(id);
+    //console.log(id);
     return this.recadosService.findOne(id);
   }
 
