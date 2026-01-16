@@ -2,7 +2,10 @@
 
 # RECADOS
 ### Lista todos os recados
-GET {{baseUrl}}/recados/?limit=2&offset=0
+GET {{baseUrl}}/recados/
+?limit=2
+&offset=0
+Authorization: 'Bearer AquiSimVemOToken'
 ### Detalha um recado específico
 GET {{baseUrl}}/recados/15
 ### Cria um novo recado
@@ -20,7 +23,7 @@ PATCH {{baseUrl}}/recados/14
 Content-Type: application/json
 
 {
-    "texto": "Recado atualizado",
+    "texto": "Recado atualizado PIPE",
     "lido": true
   }
 

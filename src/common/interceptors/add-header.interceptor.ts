@@ -1,15 +1,23 @@
-import { CallHandler, ExecutionContext, NestInterceptor } from '@nestjs/common';
+import {
+  CallHandler,
+  ExecutionContext,
+  Injectable,
+  Logger,
+  NestInterceptor,
+} from '@nestjs/common';
 import { Observable } from 'rxjs';
+import { Response } from 'express';
 
+@Injectable()
 export class AddHeaderInterceptor implements NestInterceptor {
-  intercept(
-    context: ExecutionContext,
-    next: CallHandler<any>,
-  ): Observable<any> | Promise<Observable<any>> {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    const response = context.switchToHttp().getResponse();
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
+  private readonly logger = new Logger(AddHeaderInterceptor.name);
+
+  intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
+    this.logger.debug('AddHeaderInterceptor executado.');
+
+    const response = context.switchToHttp().getResponse<Response>();
     response.setHeader('X-Custom-Header', 'O valor do cabeçalho');
+
     return next.handle();
   }
 }

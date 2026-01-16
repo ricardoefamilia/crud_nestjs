@@ -1,17 +1,23 @@
-import { CallHandler, ExecutionContext, NestInterceptor } from '@nestjs/common';
-import { tap } from 'rxjs';
+import {
+  CallHandler,
+  ExecutionContext,
+  Injectable,
+  NestInterceptor,
+} from '@nestjs/common';
+import { delay, tap } from 'rxjs';
 
+@Injectable()
 export class TimingConnectionInterceptor implements NestInterceptor {
-  async intercept(context: ExecutionContext, next: CallHandler<any>) {
+  intercept(context: ExecutionContext, next: CallHandler<any>) {
     const now = Date.now(); // Captura o tempo atual
     console.log('TimingConnectionInterceptor executado antes da requisição');
-    // await new Promise(resolve => setTimeout(resolve, 5000));
     return next.handle().pipe(
+      delay(5000),
       tap(dados => {
         const elapsed = Date.now() - now; // Calcula o tempo decorrido
         console.log(`Tempo de execução da requisição: ${elapsed}ms`);
-        // console.log(`TimingConnectionInterceptor executado após a requisição`);
-        // console.log(dados);
+        console.log(`TimingConnectionInterceptor executado após a requisição`);
+        console.log(dados);
       }),
     );
   }

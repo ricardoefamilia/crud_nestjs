@@ -1,27 +1,35 @@
-import { CallHandler, ExecutionContext, NestInterceptor } from '@nestjs/common';
-import { of, tap } from 'rxjs';
+import {
+  CallHandler,
+  ExecutionContext,
+  Injectable,
+  Logger,
+  NestInterceptor,
+} from '@nestjs/common';
+import { Observable, of, tap, delay } from 'rxjs';
+import { Request } from 'express';
 
+@Injectable()
 export class SimpleCacheInterceptor implements NestInterceptor {
-  private readonly cache = new Map();
-  async intercept(context: ExecutionContext, next: CallHandler<any>) {
-    // console.log('SimpleCacheInterceptor executado ANTES da requisição');
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    const request = context.switchToHttp().getRequest();
+  private readonly logger = new Logger(SimpleCacheInterceptor.name);
+  private readonly cache = new Map<string, unknown>();
 
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
-    const url = request.url;
+  intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
+    const request = context.switchToHttp().getRequest<Request>();
+    const cacheKey = request.originalUrl;
 
-    if (this.cache.has(url)) {
-      // console.log('Retornando resposta do cache para:', url);
-      return of(this.cache.get(url));
+    if (this.cache.has(cacheKey)) {
+      this.logger.debug(`Cache HIT para ${cacheKey}`);
+      return of(this.cache.get(cacheKey));
     }
 
-    await new Promise(resolve => setTimeout(resolve, 3000));
+    this.logger.debug(`Cache MISS para ${cacheKey}`);
 
+    // simula latência (exemplo didático)
     return next.handle().pipe(
+      delay(3000),
       tap(response => {
-        // console.log('Armazenando resposta no cache para:', url);
-        this.cache.set(url, response);
+        this.logger.log(`Armazenando resposta no cache para ${cacheKey}`);
+        this.cache.set(cacheKey, response);
       }),
     );
   }

@@ -9,23 +9,28 @@ import {
   Post,
   Query,
   UseInterceptors,
+  UsePipes,
 } from '@nestjs/common';
 import { RecadosService } from './recados.service';
 import { CreateRecadoDto } from './dto/create-recado.dto';
 import { UpdateRecadoDto } from './dto/update-recado.dto';
 import { PaginationDto } from 'src/common/dto/pagination.dto';
-import { AddHeaderInterceptor } from 'src/common/interceptors/add-header.interceptor';
-import { TimingConnectionInterceptor } from 'src/common/interceptors/timing-connection.interceptor';
+// import { AddHeaderInterceptor } from 'src/common/interceptors/add-header.interceptor';
+// import { TimingConnectionInterceptor } from 'src/common/interceptors/timing-connection.interceptor';
 import { ErrorHandlingInterceptor } from 'src/common/interceptors/error-handling.interceptor';
+import { AuthTokenInterceptor } from 'src/common/interceptors/auth-token.interceptor';
 
+// @UseInterceptors(AuthTokenInterceptor)
 @Controller('recados')
+// @UsePipes(ParseIntPipe) // usando class Pipe desenvolvida para validação de parâmetro inteiro.
 export class RecadosController {
   constructor(private readonly recadosService: RecadosService) {}
   // Encontra todos os recados
   @UseInterceptors(
-    TimingConnectionInterceptor,
-    AddHeaderInterceptor,
-    ErrorHandlingInterceptor,
+    AuthTokenInterceptor,
+    //   TimingConnectionInterceptor,
+    //   AddHeaderInterceptor,
+    //   ErrorHandlingInterceptor,
   )
   @Get()
   async findAll(@Query() paginationDto: PaginationDto) {
@@ -42,6 +47,11 @@ export class RecadosController {
     //console.log(id);
     return this.recadosService.findOne(id);
   }
+  // usando o ParseIntPipe direto para validar o parâmetro
+  // findOne(@Param('id', ParseIntPipe) id: number) {
+  //   //console.log(id);
+  //   return this.recadosService.findOne(id);
+  // }
 
   @Post()
   create(@Body() createRecadoDto: CreateRecadoDto) {
@@ -49,10 +59,7 @@ export class RecadosController {
   }
 
   @Patch(':id')
-  update(
-    @Param('id', ParseIntPipe) id: number,
-    @Body() updateRecadoDto: UpdateRecadoDto,
-  ) {
+  update(@Param('id') id: number, @Body() updateRecadoDto: UpdateRecadoDto) {
     return this.recadosService.update(id, updateRecadoDto);
   }
 
