@@ -10,6 +10,9 @@ import { RecadosModule } from './recados/recados.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { PessoasModule } from './pessoas/pessoas.module';
 import { SimpleMiddleware } from './common/middlewares/simple.middlewares';
+import { APP_FILTER } from '@nestjs/core';
+// import { MyExceptionFilter } from './common/filters/my-exception.filter';
+import { ErrorExceptionFilter } from './common/filters/error-exception.filter';
 
 @Module({
   imports: [
@@ -27,7 +30,14 @@ import { SimpleMiddleware } from './common/middlewares/simple.middlewares';
     PessoasModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    // iniciando os módulos (injeção de dependência) globalmente
+    {
+      provide: APP_FILTER,
+      useClass: ErrorExceptionFilter,
+    },
+  ],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {

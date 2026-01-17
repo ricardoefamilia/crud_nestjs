@@ -5,7 +5,7 @@
 GET {{baseUrl}}/recados/
 ?limit=2
 &offset=0
-Authorization: 'Bearer AquiSimVemOToken'
+Authorization: Bearer AquiSimVemOToken
 ### Detalha um recado específico
 GET {{baseUrl}}/recados/15
 ### Cria um novo recado

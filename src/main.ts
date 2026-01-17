@@ -1,6 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
+import { MyExceptionFilter } from './common/filters/my-exception.filter';
 //import { ParseIntIdPipe } from './common/pipes/parse-int-id.pipe';
 
 async function bootstrap() {
@@ -14,6 +15,9 @@ async function bootstrap() {
     // qdo quiser usar uma classe PIPE criada para validar parâmetro inteiro iniciada direto no construtor
     // new ParseIntIdPipe(),
   );
+
+  // app.useGlobalFilters(new MyExceptionFilter()); // exemplo de Filters file filters/my-exception.filter.ts
+
   await app.listen(process.env.PORT ?? 3000);
 }
 void bootstrap();

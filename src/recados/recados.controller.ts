@@ -9,7 +9,7 @@ import {
   Post,
   Query,
   UseInterceptors,
-  UsePipes,
+  // UsePipes,
 } from '@nestjs/common';
 import { RecadosService } from './recados.service';
 import { CreateRecadoDto } from './dto/create-recado.dto';
@@ -37,7 +37,8 @@ export class RecadosController {
     // const { limit = 10, page = 1 } = pagination;
     // console.log(`Limit: ${limit}, Page: ${page}`);
     const result = await this.recadosService.findAll(paginationDto);
-    return result;
+    throw new Error('MENSAGEM ERRO - ErrorExceptionFilter');
+    // return result;
   }
 
   // Encontra apenas um recado
