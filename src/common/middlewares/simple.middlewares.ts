@@ -3,12 +3,21 @@ import { NextFunction, Request, Response } from 'express';
 
 export class SimpleMiddleware implements NestMiddleware {
   use(req: Request, res: Response, next: NextFunction) {
-    console.log('SimpleMiddleware: Olá!');
+    // console.log('SimpleMiddleware: Olá!');
+    const authorization = req.headers?.authorization;
 
     // Terminando a cadeia de chamadas (exemplo)
     // return res.status(404).send({
     //   message: 'Não encontrado',
     // });
+
+    if (authorization) {
+      req['user'] = {
+        nome: 'Luiz',
+        sobrenome: 'Otávio',
+        role: 'admin',
+      };
+    }
 
     next();
   }

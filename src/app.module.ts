@@ -10,9 +10,10 @@ import { RecadosModule } from './recados/recados.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { PessoasModule } from './pessoas/pessoas.module';
 import { SimpleMiddleware } from './common/middlewares/simple.middlewares';
-import { APP_FILTER } from '@nestjs/core';
+import { APP_FILTER, APP_GUARD } from '@nestjs/core';
 // import { MyExceptionFilter } from './common/filters/my-exception.filter';
 import { ErrorExceptionFilter } from './common/filters/error-exception.filter';
+import { IsAdminGuard } from './common/guards/is-admin.guard';
 
 @Module({
   imports: [
@@ -36,6 +37,10 @@ import { ErrorExceptionFilter } from './common/filters/error-exception.filter';
     {
       provide: APP_FILTER,
       useClass: ErrorExceptionFilter,
+    },
+    {
+      provide: APP_GUARD,
+      useClass: IsAdminGuard,
     },
   ],
 })

@@ -1,10 +1,8 @@
 import {
   ArgumentsHost,
-  BadRequestException,
   Catch,
   ExceptionFilter,
   HttpException,
-  UnauthorizedException,
 } from '@nestjs/common';
 
 @Catch(HttpException)

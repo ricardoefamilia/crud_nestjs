@@ -1,7 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
-import { MyExceptionFilter } from './common/filters/my-exception.filter';
+// import { MyExceptionFilter } from './common/filters/my-exception.filter';
 //import { ParseIntIdPipe } from './common/pipes/parse-int-id.pipe';
 
 async function bootstrap() {

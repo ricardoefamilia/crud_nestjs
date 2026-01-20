@@ -19,7 +19,7 @@ Content-Type: application/json
   }
 
 ### Atualiza um recado existente
-PATCH {{baseUrl}}/recados/14
+PATCH {{baseUrl}}/recados/15
 Content-Type: application/json
 
 {
@@ -28,7 +28,7 @@ Content-Type: application/json
   }
 
 ### Remove/Exclui um recado existente
-DELETE {{baseUrl}}/recados/5
+DELETE {{baseUrl}}/recados/20
 
 # PESSOAS
 ### Lista todas as pessoas
