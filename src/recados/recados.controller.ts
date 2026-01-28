@@ -14,18 +14,11 @@ import { RecadosService } from './recados.service';
 import { CreateRecadoDto } from './dto/create-recado.dto';
 import { UpdateRecadoDto } from './dto/update-recado.dto';
 import { PaginationDto } from 'src/common/dto/pagination.dto';
-import * as myDynamicModule from 'src/my-dynamic/my-dynamic.module';
 
 @Controller('recados')
 // @UsePipes(ParseIntPipe) // usando class Pipe desenvolvida para validação de parâmetro inteiro.
 export class RecadosController {
-  constructor(
-    private readonly recadosService: RecadosService,
-    @Inject(myDynamicModule.MY_DINAMIC_CONFIG)
-    private readonly myDynamicConfigs: myDynamicModule.MyDynamicModuleConfigs,
-  ) {
-    console.log('RecadosController', this.myDynamicConfigs);
-  }
+  constructor(private readonly recadosService: RecadosService) {}
 
   // Encontra todos os recados
   @Get()
